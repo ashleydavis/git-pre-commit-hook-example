@@ -1,0 +1,9 @@
+{
+    "name": "git-pre-commit-hook-example",
+    "private": true,
+    "type": "module",
+    "description": "A tiny Node.js project that refuses a commit when the tests fail.",
+    "scripts": {
+        "test": "node --test --test-reporter=spec"
+    }
+}

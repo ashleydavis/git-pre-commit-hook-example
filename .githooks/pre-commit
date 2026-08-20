@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# Refuses the commit when the tests fail.
+#
+# Git runs this before it creates the commit. A non-zero exit stops the commit, and the working copy
+# is left exactly as it was, so nothing is lost: fix the problem and commit again.
+#
+# This file has no .sh extension because git recognises hooks only by these exact filenames.
+#
+set -euo pipefail
+
+# No `cd` needed: git runs a hook with the working directory already at the root of the working
+# tree, whichever directory you typed `git commit` in.
+
+echo "pre-commit: running the tests before this commit is allowed"
+
+if ! ./scripts/test-everything.sh; then
+    echo "" >&2
+    echo "pre-commit: REFUSED. Fix the failure above and commit again." >&2
+    exit 1
+fi
+
+echo "pre-commit: passed"
